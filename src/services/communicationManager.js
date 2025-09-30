@@ -1,5 +1,5 @@
 const API_KEY = '19f8a30e' // Reemplazar con tu API key de OMDB
-const BASE_URL = 'httpS://www.omdbapi.com/'
+const BASE_URL = 'https://www.omdbapi.com/'
 
 export async function searchMovies (searchTerm) {
   try {
