@@ -1,79 +1,100 @@
-# Vuetify (Default)
+# 🎬 Demo Cercador de Pel·lícules
 
-This is the official scaffolding tool for Vuetify, designed to give you a head start in building your new Vuetify application. It sets up a base template with all the necessary configurations and standard directory structure, enabling you to begin development without the hassle of setting up the project from scratch.
+Aquest projecte és una demostració pràctica de diferents tipus de comunicació entre components en Vue 3, utilitzant l'API de pel·lícules OMDB com a font de dades.
 
-## ❗️ Important Links
+## 📝 Descripció del Projecte
 
-- 📄 [Docs](https://vuetifyjs.com/)
-- 🚨 [Issues](https://issues.vuetifyjs.com/)
-- 🏬 [Store](https://store.vuetifyjs.com/)
-- 🎮 [Playground](https://play.vuetifyjs.com/)
-- 💬 [Discord](https://community.vuetifyjs.com)
+Aquesta aplicació serveix com a exemple de:
+- Comunicació pare-fill mitjançant props i emits
+- Gestió d'estat global amb Pinia
+- Implementació de components reutilitzables
+- Integració amb una API externa
 
-## 💿 Install
+## 🔄 Patrons de Comunicació Implementats
 
-Set up your project using your preferred package manager. Use the corresponding command to install the dependencies:
+### 1. Comunicació Pare-Fill
+- **Props**: El component pare (`cercador.vue`) passa informació de la pel·lícula al component fill (`fichaPelicula.vue`) mitjançant la prop `infoPeli`
+- **Emits**: El component fill emet l'esdeveniment `mesInfo` quan l'usuari clica el botó "Més Informació", que el pare captura per mostrar els detalls
 
-| Package Manager                                                | Command        |
-|---------------------------------------------------------------|----------------|
-| [yarn](https://yarnpkg.com/getting-started)                   | `yarn install` |
-| [npm](https://docs.npmjs.com/cli/v7/commands/npm-install)     | `npm install`  |
-| [pnpm](https://pnpm.io/installation)                          | `pnpm install` |
-| [bun](https://bun.sh/#getting-started)                        | `bun install`  |
+### 2. Gestió d'Estat Global amb Pinia
+- S'utilitza un magatzem Pinia (`movieInfo.js`) per compartir informació entre components
+- Quan es selecciona una pel·lícula, els seus detalls s'emmagatzemen al store i són accessibles des de qualsevol component
 
-After completing the installation, your environment is ready for Vuetify development.
+## 🛠️ Tecnologies Utilitzades
 
-## ✨ Features
+- **Vue 3**: Framework base del projecte
+- **Vuetify 3**: Components d'interfície d'usuari
+- **Pinia**: Gestió d'estat global
+- **Vite**: Eina de desenvolupament
 
-- 🖼️ **Optimized Front-End Stack**: Leverage the latest Vue 3 and Vuetify 3 for a modern, reactive UI development experience. [Vue 3](https://v3.vuejs.org/) | [Vuetify 3](https://vuetifyjs.com/en/)
-- 🗃️ **State Management**: Integrated with [Pinia](https://pinia.vuejs.org/), the intuitive, modular state management solution for Vue.
-- 🚦 **Routing and Layouts**: Utilizes Vue Router for SPA navigation and vite-plugin-vue-layouts for organizing Vue file layouts. [Vue Router](https://router.vuejs.org/) | [vite-plugin-vue-layouts](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
-- ⚡ **Next-Gen Tooling**: Powered by Vite, experience fast cold starts and instant HMR (Hot Module Replacement). [Vite](https://vitejs.dev/)
-- 🧩 **Automated Component Importing**: Streamline your workflow with unplugin-vue-components, automatically importing components as you use them. [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
+## 🚀 Com Començar
 
-These features are curated to provide a seamless development experience from setup to deployment, ensuring that your Vuetify application is both powerful and maintainable.
-
-## 💡 Usage
-
-This section covers how to start the development server and build your project for production.
-
-### Starting the Development Server
-
-To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
-
+1. Clona el repositori
+2. Instal·la les dependències:
 ```bash
-yarn dev
+npm install
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
-
-> Add NODE_OPTIONS='--no-warnings' to suppress the JSON import warnings that happen as part of the Vuetify import mapping. If you are on Node [v21.3.0](https://nodejs.org/en/blog/release/v21.3.0) or higher, you can change this to NODE_OPTIONS='--disable-warning=5401'. If you don't mind the warning, you can remove this from your package.json dev script.
-
-### Building for Production
-
-To build your project for production, use:
-
+3. Executa el servidor de desenvolupament:
 ```bash
-yarn build
+npm run dev
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
+## 📁 Estructura del Projecte
 
-Once the build process is completed, your application will be ready for deployment in a production environment.
+```
+src/
+├── components/
+│   └── fichaPelicula.vue    # Component fill que mostra la targeta de pel·lícula
+├── pages/
+│   └── cercador.vue         # Component pare que gestiona la cerca
+└── stores/
+    └── movieInfo.js         # Store de Pinia per gestionar l'estat global
+```
 
-## 💪 Support Vuetify Development
+## 🔍 Flux de l'Aplicació
 
-This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library with a comprehensive collection of Vue components. Vuetify is an MIT licensed Open Source project that has been made possible due to the generous contributions by our [sponsors and backers](https://vuetifyjs.com/introduction/sponsors-and-backers/). If you are interested in supporting this project, please consider:
+1. L'usuari introdueix un terme de cerca al component principal
+2. Es mostren els resultats com a targetes individuals (components `fichaPelicula.vue`)
+3. En clicar "Més Informació":
+   - El component fill emet l'esdeveniment
+   - El pare rep l'ID i carrega els detalls
+   - La informació s'emmagatzema al store de Pinia
+   - Es mostra un diàleg amb la informació detallada
 
-- [Requesting Enterprise Support](https://support.vuetifyjs.com/)
-- [Sponsoring John on Github](https://github.com/users/johnleider/sponsorship)
-- [Sponsoring Kael on Github](https://github.com/users/kaelwd/sponsorship)
-- [Supporting the team on Open Collective](https://opencollective.com/vuetify)
-- [Becoming a sponsor on Patreon](https://www.patreon.com/vuetify)
-- [Becoming a subscriber on Tidelift](https://tidelift.com/subscription/npm/vuetify)
-- [Making a one-time donation with Paypal](https://paypal.me/vuetify)
+## 📚 Exemples de Comunicació
 
-## 📑 License
+### Props (Pare → Fill)
+```vue
+<!-- Al component pare (cercador.vue) -->
+<fichaPelicula :infoPeli="actual"></fichaPelicula>
+
+<!-- Al component fill (fichaPelicula.vue) -->
+defineProps(['infoPeli'])
+```
+
+### Emits (Fill → Pare)
+```vue
+<!-- Al component fill (fichaPelicula.vue) -->
+<v-btn @click="$emit('mesInfo', infoPeli.imdbID)">
+
+<!-- Al component pare (cercador.vue) -->
+<fichaPelicula @mesInfo="(id) => demanarMesInfo(id)">
+```
+
+### Store Pinia
+```javascript
+// Definició del store
+export const useMovieinfoStore = defineStore('infoStore', () => {
+  const info = ref({})
+  return { info }
+})
+
+// Ús al component
+const movieinfoStore = useMovieinfoStore()
+movieinfoStore.info = data
+```
+
+## 📄 Llicència
+
 [MIT](http://opensource.org/licenses/MIT)
-
-Copyright (c) 2016-present Vuetify, LLC

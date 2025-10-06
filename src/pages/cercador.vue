@@ -1,4 +1,5 @@
 <template>
+  <v-btn to="/" text="Tornar"></v-btn>
   <v-dialog v-model="dialog"  width="auto">
       <v-card max-width="800" text="Informació detallada"  >
 
