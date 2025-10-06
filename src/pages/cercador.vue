@@ -115,45 +115,41 @@
           ></v-btn>
         </template>
       </v-card>
-    </v-dialog>
+  </v-dialog>
           <v-text-field v-model="textCerca" />
           <v-btn @click="enviarPeticio">Cercar </v-btn>
         <v-row>
           <v-col cols="4" v-for="actual in pelicules" :key="actual.imdbID">
-              <v-card class="mx-auto" max-width="344" >
-              <v-img :src="actual.Poster"  ></v-img>
-              <v-card-title> {{actual.Title}} </v-card-title>
-
-              <v-card-subtitle> {{actual.Year}} </v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn @click="demanarMesInfo(actual.imdbID)" color="orange-lighten-2" text="Més Informació" ></v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
+             <fichaPelicula @mesInfo="(id) => demanarMesInfo(id)"  :infoPeli="actual"></fichaPelicula>
           </v-col>
 
           </v-row>
 </template>
 <script setup>
   import { ref, reactive } from 'vue'
+  import fichaPelicula from '@/components/fichaPelicula.vue'
+  import { useMovieinfoStore } from '@/stores/movieInfo.js'
+  const movieinfoStore = useMovieinfoStore()
+
   const dialog = ref(false)
   const textCerca = ref('')
   const pelicules = ref([])
   const infoDetallada = ref({})
   const API_KEY = '19f8a30e' // Reemplazar con tu API key de OMDB
-  const BASE_URL = 'http://www.omdbapi.com/'
+  const BASE_URL = 'https://www.omdbapi.com/'
 
   async function enviarPeticio() {
     const response = await fetch(`${BASE_URL}?s=${textCerca.value}&apikey=${API_KEY}`)
     const data = await response.json()
     pelicules.value = data.Search
   }
-  async function demanarMesInfo(id) {
+
+ async function demanarMesInfo(id) {
     const response = await fetch(`${BASE_URL}?i=${id}&apikey=${API_KEY}`)
     const data = await response.json()
     console.log(data)
     infoDetallada.value = data
+    movieinfoStore.info = data
     dialog.value=true
   }
 </script>
